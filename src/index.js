@@ -33,6 +33,10 @@ app.get("*", (req, res) => {
   Promise.all(promises).then(() => {
     const context = {};
     const content = renderer(req, store, context);
+    // this will be set if Redirect is used
+    if(context.url) {
+      return res.redirect(301, context.url);
+    }
     if (context.notFound) {
       console.log("HERE");
       res.status(404);
